@@ -1,3 +1,4 @@
+// const util = require("util");
 const { merge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -24,6 +25,9 @@ const prod = {
     new MiniCssExtractPlugin({ filename: "[name].css" }),
   ],
 }
+
+
+// console.dir(util.inspect(merge(common, prod), {depth: null}));
 
 // Merge common and prod config
 module.exports = merge(common, prod);
