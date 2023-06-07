@@ -1,18 +1,19 @@
-const { merge } = require("webpack-merge");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { merge } = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 // import webpack share config
-const common = require("./webpack.common");
+const common = require('./webpack.common');
 
 // Dev only config
 const dev = {
-  mode: "development",
-  devtool: "source-map",
+  mode: 'development',
+  devtool: 'source-map',
   module: {
     rules: [
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
@@ -26,6 +27,7 @@ const dev = {
       cleanStaleWebpackAssets: true,
       protectWebpackAssets: false,
     }),
+    new ESLintPlugin(),
   ],
 };
 
