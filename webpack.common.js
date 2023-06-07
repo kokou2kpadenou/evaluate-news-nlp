@@ -1,11 +1,12 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: "./src/client/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, "dist"),
     libraryTarget: "var",
     library: "Client",
   },
@@ -27,6 +28,8 @@ module.exports = {
       template: "./src/client/views/index.html",
       filename: "./index.html",
     }),
+    new CopyPlugin({
+      patterns: [{ from: "public" }],
+    }),
   ],
 };
-
