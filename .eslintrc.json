@@ -8,9 +8,7 @@
     "Client": "readonly"
   },
   "parser": "@babel/eslint-parser",
-  "extends": [
-    "airbnb-base"
-  ],
+  "extends": ["airbnb-base", "prettier"],
   "rules": {
     "no-console": 0,
     "no-alert": 0
