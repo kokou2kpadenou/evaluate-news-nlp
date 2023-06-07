@@ -1,0 +1,18 @@
+{
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "globals": {
+    "Client": "readonly"
+  },
+  "parser": "@babel/eslint-parser",
+  "extends": [
+    "airbnb-base"
+  ],
+  "rules": {
+    "no-console": 0,
+    "no-alert": 0
+  }
+}
