@@ -7,6 +7,10 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
   entry: "./src/client/index.js",
+  output: {
+    libraryTarget: "var",
+    library: "Client",
+  },
   mode: "production",
   optimization: {
     minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
