@@ -71,3 +71,8 @@ app.get('/sentiment', async (req, res) => {
     res.status(500).send({ error: 'Internal Server Error' });
   }
 });
+
+// Middleware for handling 404
+app.use((req, res) => {
+  res.status(404).send("Sorry, the requested resource couldn't be found.");
+});
