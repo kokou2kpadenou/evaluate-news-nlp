@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 // const path = require('path');
 const express = require('express');
+const cors = require("cors");
 const mockAPIResponse = require('./mockAPI');
 
 dotenv.config();
@@ -8,6 +9,8 @@ dotenv.config();
 const MC_API_CREDENTIALS = process.env.API_KEY;
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.static('dist'));
 
