@@ -145,13 +145,23 @@ app.get('/sentiment', async (req, res) => {
       return articleData;
     })
     .then(async (article) => {
+      const time = new Date().toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: false,
+      });
+
       const { title, pTxt } = article;
 
       const result = await fetchSentimentFromMC(pTxt);
       // eslint-disable-next-line camelcase
       const { agreement, confidence, irony, score_tag, subjectivity } = result;
       // eslint-disable-next-line camelcase
-      res.status(200).send({ title, agreement, confidence, irony, score_tag, subjectivity });
+      res.status(200).send({ time, title, sentiment: { agreement, confidence, irony, score_tag, subjectivity } });
     })
     .catch((error) => {
       // Handle the error
