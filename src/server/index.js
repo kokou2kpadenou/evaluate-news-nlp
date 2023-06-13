@@ -1,12 +1,15 @@
 const dotenv = require('dotenv');
 // const path = require('path');
 const express = require('express');
-const cors = require("cors");
+const cors = require('cors');
+const { JSDOM } = require('jsdom');
 const mockAPIResponse = require('./mockAPI');
 
 dotenv.config();
 
 const MC_API_CREDENTIALS = process.env.API_KEY;
+const MC_BASE_URL = 'https://api.meaningcloud.com/sentiment-2.1';
+const PORT = process.env.PORT || 8081;
 
 const app = express();
 
@@ -22,28 +25,65 @@ app.get('/', (req, res) => {
 });
 
 // designates what port the app will listen to for incoming requests
-app.listen(8081, () => {
-  console.log('Evalute News app listening on port 8081!');
+app.listen(PORT, () => {
+  console.log('Evalute News App listening on port 8081!');
 });
 
-// test route
-app.get('/test', (req, res) => {
-  res.send(mockAPIResponse);
-});
-
-// sentiment route
-app.get('/sentiment', async (req, res) => {
-  const { txt: txtToAnalyst } = req.query;
-
-  // In case txt is missing in query send error 400
-  if (!txtToAnalyst) {
-    res.status(400).send({ error: 'Missing parameter: txt' });
-    return;
+/**
+ * Fetches the HTML content of an article from the specified URL.
+ * @param {string} url - The URL of the article.
+ * @throws {Error} - If there is an error fetching the article content.
+ * @returns {Promise<string>} - A promise that resolves to the HTML content of the article.
+ */
+async function fetchArticle(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Failed to fetch article content');
+    }
+    const html = await response.text();
+    return html;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to fetch article content');
   }
+}
 
+/**
+ * Parses the HTML content and extracts the relevant text content from the article.
+ * @param {string} html - The HTML content of the article.
+ * @returns {object} - An object containing the title and text content of the article.
+ */
+function parseArticleContent(html) {
+  const dom = new JSDOM(html);
+  const { document } = dom.window;
+
+  // Get the title element
+  const titleElement = document.querySelector('h1');
+  const title = titleElement ? titleElement.textContent : '';
+
+  // Get the paragraphs
+  const pElements = document.querySelectorAll('p');
+
+  // Check if title element is valid before accessing textContent
+  const pTxt = Array.from(pElements).reduce((text, pElt) => `${text} ${pElt.textContent}`, '');
+
+  return {
+    title,
+    pTxt,
+  };
+}
+
+/**
+ * Fetches sentiment data from MeaningCloud API.
+ * @param {string} txt - The text to analyze.
+ * @throws {Error} - If an error occurs during the fetch request or parsing the response.
+ * @returns {Promise<object>} - A promise that resolves to the sentiment data object.
+ */
+async function fetchSentimentFromMC(txt) {
   const formdata = new FormData();
   formdata.append('key', MC_API_CREDENTIALS);
-  formdata.append('txt', txtToAnalyst);
+  formdata.append('txt', txt);
   formdata.append('lang', 'en');
 
   const requestOptions = {
@@ -54,14 +94,13 @@ app.get('/sentiment', async (req, res) => {
 
   try {
     // fetch data from MeaningCloud
-    const response = await fetch('https://api.meaningcloud.com/sentiment-2.1', requestOptions);
+    const response = await fetch(MC_BASE_URL, requestOptions);
 
     // When status egal 200
     if (response.status === 200) {
       try {
         const body = await response.json();
-        res.status(200).send(body);
-        return;
+        return body;
       } catch (error) {
         console.log(error);
       }
@@ -73,8 +112,52 @@ app.get('/sentiment', async (req, res) => {
     throw new Error('Something went wrong!');
   } catch (error) {
     console.error(error);
-    res.status(500).send({ error: 'Internal Server Error' });
+    throw new Error('Failed to get Sentiment from MeaningCloug');
   }
+}
+
+// test route
+app.get('/test', (req, res) => {
+  res.send(mockAPIResponse);
+});
+
+// sentiment route
+app.get('/sentiment', async (req, res) => {
+  const { url: urlToAnalyst } = req.query;
+
+  // In case url is missing in query send error 400
+  if (!urlToAnalyst) {
+    res.status(400).send({ error: 'Missing parameter: url' });
+    return;
+  }
+
+  // Invalid url
+  const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(:\d{2,5})?([/?].*)?$/i;
+  if (!urlPattern.test(urlToAnalyst)) {
+    res.status(400).send({ error: 'Invalid url' });
+    return;
+  }
+
+  await fetchArticle(urlToAnalyst)
+    .then((html) => {
+      // Process the article content as needed
+      const articleData = parseArticleContent(html);
+      return articleData;
+    })
+    .then(async (article) => {
+      const { title, pTxt } = article;
+
+      const result = await fetchSentimentFromMC(pTxt);
+      // eslint-disable-next-line camelcase
+      const { agreement, confidence, irony, score_tag, subjectivity } = result;
+      // eslint-disable-next-line camelcase
+      res.status(200).send({ title, agreement, confidence, irony, score_tag, subjectivity });
+    })
+    .catch((error) => {
+      // Handle the error
+      console.error(error);
+      res.status(500).send({ error: 'Internal Server Error' });
+    });
 });
 
 // Middleware for handling 404
