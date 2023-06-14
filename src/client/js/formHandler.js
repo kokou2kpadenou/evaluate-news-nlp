@@ -1,3 +1,8 @@
+/**
+ *
+ * Toggle the visibility of a loading indicator.
+ * @param {boolean} show - Whether to show or hide the loading indicator.
+ */
 function processing(show) {
   const form = document.getElementById('form__loading');
   if (show) {
@@ -7,76 +12,102 @@ function processing(show) {
   }
 }
 
+/**
+ *
+ * Display the result of the sentiment analysis.
+ * @param {object} result - The result object containing sentiment analysis data.
+ * @param {string} result.time - The formatted time.
+ * @param {string} result.title - The title of the article.
+ * @param {object} result.sentiment - The sentiment analysis data.
+ * @param {string} result.sentiment.agreement - The agreement value.
+ * @param {number} result.sentiment.confidence - The confidence value.
+ * @param {string} result.sentiment.irony - The irony value.
+ * @param {string} result.sentiment.score_tag - The score tag value.
+ * @param {string} result.sentiment.subjectivity - The subjectivity value.
+ */
 function displayResult(result) {
-  // Add Clear screen
   const { time, title, sentiment } = result;
   const { agreement, confidence, irony, score_tag: scoreTag, subjectivity } = sentiment;
 
-  document.getElementById('title').innerHTML = title;
-  document.getElementById('time').innerHTML = time;
-  document.getElementById('agreement').innerHTML = agreement;
-  document.getElementById('confidence').innerHTML = confidence;
-  document.getElementById('irony').innerHTML = irony;
-  document.getElementById('scoreTag').innerHTML = scoreTag;
-  document.getElementById('subjectivity').innerHTML = subjectivity;
+  const htmlCode = `<div class="title"><strong>Title: </strong><span>${title}</span></div>
+      <div class="time"><strong>Time: </strong><span>${time}</span></div>
+      <ul class="sentiment">
+        <li class="agreement"><strong>Agreement: </strong><span>${agreement}</span></li>
+        <li class="confidence"><strong>Confidence: </strong><span>${confidence}</span></li>
+        <li class="irony"><strong>Irony: </strong><span>${irony}</span></li>
+        <li class="scoretag"><strong>Polarity: </strong><span>${scoreTag}</span></li>
+        <li class="subjectivity"><strong>Subjectivity: </strong><span>${subjectivity}</span></li>
+      </ul> `;
+
+  document.getElementById('results').innerHTML = htmlCode;
 }
 
+/**
+ *
+ * Display an error message in the results section.
+ * @param {string} error - The error message to display.
+ */
 function displayError(error) {
-  // Add clear Screen
-  document.getElementById('error-display').innerHTML = error;
+  document.getElementById('results').innerHTML = error;
 }
 
+/**
+ *
+ * Handle the form submission event.
+ * @param {Event} event - The form submission event object.
+ * @returns {Promise<void>} - A promise that resolves once the form is submitted.
+ */
 async function handleSubmit(event) {
   event.preventDefault();
 
   // check what text was put into the form field
   const formText = document.getElementById('name').value;
 
-  Client.checkForName(formText);
+  if (!Client.checkForName(formText)) {
+    displayError('Invalid URL');
+    return;
+  }
 
-  // TODO: splash for process procession and display error message to user
   console.log('::: Form Submitted :::');
+
+  // Show the loading indicator
   processing(true);
-  await fetch(`http://localhost:8081/sentiment?url=${formText}`)
+
+  await fetch(`http://localhost:8081/sentiment?url=${Client.addHttpsToUrl(formText)}`)
     .then(async (res) => {
-      console.log(res.status);
       const { status } = res;
       const data = await res.json();
       return { status, data };
     })
     .then((res) => {
-      console.log(res);
-
       if (res.status === 200) {
-        // {
-        //     "time": "6/13/2023, 21:21:39",
-        //     "title": "KOKOU KPADENOU",
-        //     "sentiment": {
-        //         "agreement": "AGREEMENT",
-        //         "confidence": "98",
-        //         "irony": "NONIRONIC",
-        //         "score_tag": "P",
-        //         "subjectivity": "SUBJECTIVE"
-        //     }
-        // }
-        // document.getElementById('results').innerHTML = res.message;
         displayResult(res.data);
       } else {
-        displayError(res.error);
+        displayError(res.data.error);
       }
     })
     .catch((error) => {
-      console.log(error);
       // Manage and display error
       displayError(error.message);
     });
+
+  // Close the loading indicator
   processing(false);
 }
 
+/**
+ * Event handler for the 'blur' event of an input element.
+ * Logs a message when the input loses focus.
+ */
 function onBlur() {
   console.log('input lost focus!');
 }
 
+/**
+ *
+ * Handle the input event on the text input field.
+ * @param {Event} event - The input event object.
+ */
 function onInput(event) {
   const btn = document.getElementById('submitBtn');
 
