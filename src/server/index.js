@@ -109,10 +109,10 @@ async function fetchSentimentFromMC(txt) {
     // For any other status console log the status and throw an erreur
     console.error(response.status);
 
-    throw new Error('Something went wrong!');
+    throw new Error('Failed to analyse the article');
   } catch (error) {
     console.error(error);
-    throw new Error('Failed to get Sentiment from MeaningCloug');
+    throw new Error('Failed to analyse the article');
   }
 }
 
@@ -166,7 +166,7 @@ app.get('/sentiment', async (req, res) => {
     .catch((error) => {
       // Handle the error
       console.error(error);
-      res.status(500).send({ error: 'Internal Server Error' });
+      res.status(500).send({ error: `Internal Server Error. ${error.message}` });
     });
 });
 
