@@ -1,7 +1,23 @@
-form {
+.form {
+    position: relative;
     border: 1px solid #545454;
     border-radius: 3px;
     padding: 40px;
+
+    &__loading {
+        position: absolute;
+        inset: 0;
+        // font-size: 0.8rem;
+        color: white;
+        background-color: black;
+        display: none;
+        justify-items: center;
+        align-items: center;
+        // text-align: center;
+        &--active {
+            display: grid;
+        }
+    }
 }
 
 input {
@@ -9,4 +25,47 @@ input {
     width: 100%;
     line-height: 16px;
     margin: 10px 0;
+}
+
+.lds {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+
+    &__child {
+        display: inline-block;
+        position: absolute;
+        left: 8px;
+        width: 16px;
+        background: #fff;
+        animation: lds 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+    }
+
+    &__child:nth-child(1) {
+        left: 8px;
+        animation-delay: -0.24s;
+    }
+
+    &__child:nth-child(2) {
+        left: 32px;
+        animation-delay: -0.12s;
+    }
+
+    &__child:nth-child(3) {
+        left: 56px;
+        animation-delay: 0;
+    }
+}
+
+@keyframes lds {
+    0% {
+        top: 8px;
+        height: 64px;
+    }
+    50%,
+    100% {
+        top: 24px;
+        height: 32px;
+    }
 }
