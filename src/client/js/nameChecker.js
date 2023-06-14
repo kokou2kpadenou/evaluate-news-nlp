@@ -1,11 +1,29 @@
+/**
+ *
+ * Check if the input text matches a valid URL pattern.
+ * @param {string} inputText - The input text to be checked.
+ * @returns {boolean} - True if the input text is a valid URL, false otherwise.
+ */
 function checkForName(inputText) {
-  console.log('::: Running checkForName :::', inputText);
-  const names = ['Picard', 'Janeway', 'Kirk', 'Archer', 'Georgiou'];
+  const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(:\d{2,5})?([/?].*)?$/i;
 
-  if (names.includes(inputText)) {
-    alert('Welcome, Captain!');
-  }
+  return urlPattern.test(inputText);
 }
 
-/* eslint-disable import/prefer-default-export */
-export { checkForName };
+
+/**
+ * Add 'https://' to the URL if it doesn't already have it.
+ * @param {string} url - The URL to be modified.
+ * @returns {string} - The modified URL with 'https://' added if necessary.
+ */
+function addHttpsToUrl(url) {
+  let urlWithProtocol = url;
+
+  if (!urlWithProtocol.startsWith('http://') && !urlWithProtocol.startsWith('https://')) {
+    urlWithProtocol = `https://${urlWithProtocol}`;
+  }
+
+  return urlWithProtocol;
+}
+
+export { checkForName, addHttpsToUrl };

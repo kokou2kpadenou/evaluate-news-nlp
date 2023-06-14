@@ -1,5 +1,5 @@
-import { checkForName } from './js/nameChecker';
-import { handleSubmit, onBlur, onInput } from './js/formHandler';
+import { checkForName, addHttpsToUrl } from './js/nameChecker';
+import { handleSubmit, onBlur } from './js/formHandler';
 import { handleClickToggle } from './js/modeToggle';
 import { openNav, closeNav } from './js/nav';
 
@@ -35,4 +35,4 @@ console.log(asciiArt);
 // alert('I EXIST');
 // console.log('CHANGE!!');
 
-export { checkForName, handleSubmit, onBlur, onInput, handleClickToggle, openNav, closeNav };
+export { checkForName, addHttpsToUrl, handleSubmit, onBlur, handleClickToggle, openNav, closeNav };
