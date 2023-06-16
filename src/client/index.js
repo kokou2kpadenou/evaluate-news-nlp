@@ -1,6 +1,6 @@
 import { checkForName, addHttpsToUrl } from './js/nameChecker';
-import { handleSubmit, onBlur } from './js/formHandler';
-import { handleClickToggle } from './js/modeToggle';
+import { handleSubmit, handleClearInput, onBlur, onInput } from './js/formHandler';
+import { handleClickToggle, setModeAtStartup } from './js/modeToggle';
 import { openNav, closeNav } from './js/nav';
 
 import './styles/resets.scss';
@@ -35,4 +35,14 @@ console.log(asciiArt);
 // alert('I EXIST');
 // console.log('CHANGE!!');
 
-export { checkForName, addHttpsToUrl, handleSubmit, onBlur, handleClickToggle, openNav, closeNav };
+export {
+  checkForName,
+  addHttpsToUrl,
+  handleSubmit,
+  handleClearInput,
+  onBlur,
+  onInput,
+  handleClickToggle,
+  openNav,
+  closeNav,
+};
