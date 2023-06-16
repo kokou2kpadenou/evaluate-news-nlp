@@ -78,6 +78,18 @@ function displayError(error) {
 }
 
 /**
+ * Clears the value of an input field with the ID 'name'.
+ */
+function handleClearInput() {
+  const inputElt = document.getElementById('name');
+
+  if (inputElt) {
+    inputElt.value = '';
+    inputElt.dispatchEvent(new Event('input'));
+  }
+}
+
+/**
  *
  * Handle the form submission event.
  * @param {Event} event - The form submission event object.
