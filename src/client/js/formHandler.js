@@ -149,16 +149,17 @@ function onBlur() {
  * @param {Event} event - The input event object.
  */
 function onInput(event) {
-  const btn = document.getElementById('submitBtn');
-
-  if (!btn) return;
+  const submitBtn = document.getElementById('submitBtn');
+  const clearBtn = document.getElementById('input__clear');
 
   if (event.target.value) {
     // active button
-    btn.disabled = false;
+    submitBtn.disabled = false;
+    clearBtn.style.display = 'block';
   } else {
-    // disablw button
-    btn.disabled = true;
+    // disable button
+    submitBtn.disabled = true;
+    clearBtn.style.display = 'none';
   }
 }
 
