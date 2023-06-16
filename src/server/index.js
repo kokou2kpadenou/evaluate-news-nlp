@@ -68,6 +68,10 @@ function parseArticleContent(html) {
   // Check if title element is valid before accessing textContent
   const pTxt = Array.from(pElements).reduce((text, pElt) => `${text} ${pElt.textContent}`, '');
 
+
+  // Throw error when no paragraph in the article
+  if (!pTxt) throw new Error('Article is not well structured!');
+
   return {
     title,
     pTxt,
