@@ -34,6 +34,10 @@ console.log(asciiArt);
 
 // alert('I EXIST');
 // console.log('CHANGE!!');
+//
+document.addEventListener('DOMContentLoaded', () => {
+  setModeAtStartup();
+});
 
 export {
   checkForName,
