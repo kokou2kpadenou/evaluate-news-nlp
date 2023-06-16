@@ -58,12 +58,15 @@ function displayResult(result) {
   const htmlCode = `<div class="title"><strong>Title: </strong><span>${title}</span></div>
       <div class="time"><strong>Time: </strong><span>${time}</span></div>
       <ul class="sentiment">
-        <li class="agreement"><strong>Agreement: </strong><span>${agreement}</span></li>
-        <li class="confidence"><strong>Confidence: </strong><span>${confidence}</span></li>
-        <li class="irony"><strong>Irony: </strong><span>${irony}</span></li>
-        <li class="scoretag"><strong>Polarity: </strong><span>${scoreTag}</span></li>
-        <li class="subjectivity"><strong>Subjectivity: </strong><span>${subjectivity}</span></li>
-      </ul> `;
+        <li class="agreement"><strong class="lab">Agreement</strong><img src="/"><span class="val">${agreement}</span></li>
+        <li class="confidence"><strong class="lab">Confidence</strong><img src="/"><span class="val">${confidence}%</span></li>
+        <li class="irony"><strong class="lab">Irony</strong><img src="/"><span class="val">${irony}</span></li>
+        <li class="scoretag"><strong class="lab">Polarity</strong><img src="/"><span class="val">${polarityMsg(
+    scoreTag
+  )}</span></li>
+        <li class="subjectivity"><strong class="lab">Subjectivity</strong><img src="/"><span class="val">${subjectivity}</span></li>
+      </ul>
+      <div class="time">${time}</div>`;
 
   document.getElementById('results').innerHTML = htmlCode;
 }
