@@ -14,6 +14,32 @@ function processing(show) {
 
 /**
  *
+ * Returns the corresponding polarity message based on the provided code.
+ * @param {string} code - The polarity code.
+ * @returns {string} The polarity message.
+ */
+function polarityMsg(code) {
+  switch (code) {
+    case 'P+':
+      return 'STRONG POSITIVE';
+    case 'P':
+      return 'POSITIVE';
+    case 'NEU':
+      return 'NEUTRAL';
+    case 'N':
+      return 'NEGATIVE';
+    case 'N+':
+      return 'STRONG NEGATIVE';
+    case 'NONE':
+      return 'WITHOUT POLARITY';
+
+    default:
+      return 'NONE';
+  }
+}
+
+/**
+ *
  * Display the result of the sentiment analysis.
  * @param {object} result - The result object containing sentiment analysis data.
  * @param {string} result.time - The formatted time.
