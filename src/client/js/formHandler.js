@@ -55,8 +55,7 @@ function displayResult(result) {
   const { time, title, sentiment } = result;
   const { agreement, confidence, irony, score_tag: scoreTag, subjectivity } = sentiment;
 
-  const htmlCode = `<div class="title"><strong>Title: </strong><span>${title}</span></div>
-      <div class="time"><strong>Time: </strong><span>${time}</span></div>
+  const htmlCode = `<div class="title">${title}</div>
       <ul class="sentiment">
         <li class="agreement"><strong class="lab">Agreement</strong><img src="/"><span class="val">${agreement}</span></li>
         <li class="confidence"><strong class="lab">Confidence</strong><img src="/"><span class="val">${confidence}%</span></li>
@@ -105,7 +104,7 @@ async function handleSubmit(event) {
   const formText = document.getElementById('name').value;
 
   if (!Client.checkForName(formText)) {
-    displayError('Invalid URL');
+    displayError(`${formText} is an invalid URL`);
     return;
   }
 
@@ -152,9 +151,9 @@ function onBlur() {
 function onInput(event) {
   const btn = document.getElementById('submitBtn');
 
-  const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(:\d{2,5})?([/?].*)?$/i;
+  if (!btn) return;
 
-  if (urlPattern.test(event.target.value)) {
+  if (event.target.value) {
     // active button
     btn.disabled = false;
   } else {
@@ -163,4 +162,4 @@ function onInput(event) {
   }
 }
 
-export { handleSubmit, onBlur, onInput };
+export { handleSubmit, handleClearInput, onBlur, onInput };
