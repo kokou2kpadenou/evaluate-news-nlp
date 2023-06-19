@@ -52,20 +52,41 @@ function polarityMsg(code) {
  * @param {string} result.sentiment.subjectivity - The subjectivity value.
  */
 function displayResult(result) {
-  const { time, title, sentiment } = result;
+  const { time, url, title, sentiment } = result;
   const { agreement, confidence, irony, score_tag: scoreTag, subjectivity } = sentiment;
 
-  const htmlCode = `<div class="title">${title}</div>
+  const htmlCode = `<h3 class="title">${title}</h3>
+      <p>
+        (<a class="url" href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>)
+      </p>
       <ul class="sentiment">
-        <li class="agreement"><strong class="lab">Agreement</strong><img src="/"><span class="val">${agreement}</span></li>
-        <li class="confidence"><strong class="lab">Confidence</strong><img src="/"><span class="val">${confidence}%</span></li>
-        <li class="irony"><strong class="lab">Irony</strong><img src="/"><span class="val">${irony}</span></li>
-        <li class="scoretag"><strong class="lab">Polarity</strong><img src="/"><span class="val">${polarityMsg(
-    scoreTag
-  )}</span></li>
-        <li class="subjectivity"><strong class="lab">Subjectivity</strong><img src="/"><span class="val">${subjectivity}</span></li>
+        <li class="agreement">
+          <strong class="lab">Agreement</strong>
+          <img src="/">
+          <h4 class="val">${agreement}</h4>
+        </li>
+        <li class="confidence">
+          <strong class="lab">Confidence</strong>
+          <img src="/">
+          <h4 class="val">${confidence}%</h4>
+        </li>
+        <li class="irony">
+          <strong class="lab">Irony</strong>
+          <img src="/">
+          <h4 class="val">${irony}</h4>
+        </li>
+        <li class="scoretag">
+          <strong class="lab">Polarity</strong>
+          <img src="/">
+          <h4 class="val">${polarityMsg(scoreTag)}</h4>
+        </li>
+        <li class="subjectivity">
+          <strong class="lab">Subjectivity</strong>
+          <img src="/">
+          <h4 class="val">${subjectivity}</h4>
+        </li>
       </ul>
-      <div class="time">${time}</div>`;
+      <div class="time"><i>${time}</i></div>`;
 
   document.getElementById('results').innerHTML = htmlCode;
 }
