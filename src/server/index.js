@@ -30,10 +30,10 @@ app.listen(PORT, () => {
 });
 
 /**
- * Fetches the HTML content of an article from the specified URL.
+ * Fetches the article content from the specified URL.
  * @param {string} url - The URL of the article.
- * @throws {Error} - If there is an error fetching the article content.
- * @returns {Promise<string>} - A promise that resolves to the HTML content of the article.
+ * @returns {Promise<[string, string]>} A promise that resolves to an array containing the URL and HTML content of the article.
+ * @throws {Error} If there is an error fetching the article content.
  */
 async function fetchArticle(url) {
   try {
@@ -42,7 +42,7 @@ async function fetchArticle(url) {
       throw new Error('Failed to fetch article content');
     }
     const html = await response.text();
-    return html;
+    return [url, html];
   } catch (error) {
     console.error(error);
     throw new Error('Failed to fetch article content');
@@ -50,11 +50,11 @@ async function fetchArticle(url) {
 }
 
 /**
- * Parses the HTML content and extracts the relevant text content from the article.
+ * Parses the HTML content and extracts the title
  * @param {string} html - The HTML content of the article.
- * @returns {object} - An object containing the title and text content of the article.
+ * @returns {string} - The title of the article
  */
-function parseArticleContent(html) {
+function getTitle(html) {
   const dom = new JSDOM(html);
   const { document } = dom.window;
 
@@ -62,32 +62,19 @@ function parseArticleContent(html) {
   const titleElement = document.querySelector('h1');
   const title = titleElement ? titleElement.textContent : '';
 
-  // Get the paragraphs
-  const pElements = document.querySelectorAll('p');
-
-  // Check if title element is valid before accessing textContent
-  const pTxt = Array.from(pElements).reduce((text, pElt) => `${text} ${pElt.textContent}`, '');
-
-
-  // Throw error when no paragraph in the article
-  if (!pTxt) throw new Error('Article is not well structured!');
-
-  return {
-    title,
-    pTxt,
-  };
+  return title;
 }
 
 /**
  * Fetches sentiment data from MeaningCloud API.
- * @param {string} txt - The text to analyze.
+ * @param {string} url - The url to analyze.
  * @throws {Error} - If an error occurs during the fetch request or parsing the response.
  * @returns {Promise<object>} - A promise that resolves to the sentiment data object.
  */
-async function fetchSentimentFromMC(txt) {
+async function fetchSentimentFromMC(url) {
   const formdata = new FormData();
   formdata.append('key', MC_API_CREDENTIALS);
-  formdata.append('txt', txt);
+  formdata.append('url', url);
   formdata.append('lang', 'en');
 
   const requestOptions = {
@@ -143,10 +130,11 @@ app.get('/sentiment', async (req, res) => {
   }
 
   await fetchArticle(urlToAnalyst)
-    .then((html) => {
+    .then((data) => {
+      const [url, html] = data;
       // Process the article content as needed
-      const articleData = parseArticleContent(html);
-      return articleData;
+      const title = getTitle(html);
+      return { url, title };
     })
     .then(async (article) => {
       const time = new Date().toLocaleString('en-US', {
@@ -159,13 +147,13 @@ app.get('/sentiment', async (req, res) => {
         hour12: false,
       });
 
-      const { title, pTxt } = article;
+      const { title, url } = article;
 
-      const result = await fetchSentimentFromMC(pTxt);
+      const result = await fetchSentimentFromMC(url);
       // eslint-disable-next-line camelcase
       const { agreement, confidence, irony, score_tag, subjectivity } = result;
       // eslint-disable-next-line camelcase
-      res.status(200).send({ time, title, sentiment: { agreement, confidence, irony, score_tag, subjectivity } });
+      res.status(200).send({ time, url, title, sentiment: { agreement, confidence, irony, score_tag, subjectivity } });
     })
     .catch((error) => {
       // Handle the error
