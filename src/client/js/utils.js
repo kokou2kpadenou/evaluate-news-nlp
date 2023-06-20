@@ -18,4 +18,13 @@ function getItem(item) {
   return localStorage.getItem(item);
 }
 
-export { setItem, getItem };
+/**
+ * Sets the current year as the copyright year in the footer.
+ */
+function setCopyrightYear() {
+  const currentYear = new Date().getFullYear();
+  const yearElement = document.getElementById('current-year');
+  yearElement.textContent = currentYear;
+}
+
+export { setItem, getItem, setCopyrightYear };

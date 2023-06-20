@@ -2,6 +2,7 @@ import { checkForName, addHttpsToUrl } from './js/nameChecker';
 import { handleSubmit, handleClearInput, onBlur, onInput } from './js/formHandler';
 import { handleClickToggle, setModeAtStartup } from './js/modeToggle';
 import { openNav, closeNav } from './js/nav';
+import { setCopyrightYear } from './js/utils';
 
 import './styles/resets.scss';
 import './styles/base.scss';
@@ -37,6 +38,7 @@ console.log(asciiArt);
 //
 document.addEventListener('DOMContentLoaded', () => {
   setModeAtStartup();
+  setCopyrightYear();
 });
 
 export {
