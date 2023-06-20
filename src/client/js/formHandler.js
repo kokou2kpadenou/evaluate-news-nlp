@@ -59,33 +59,36 @@ function displayResult(result) {
       <p>
         (<a class="url" href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>)
       </p>
-      <ul class="sentiment">
-        <li class="agreement">
-          <strong class="lab">Agreement</strong>
-          <img src="/">
-          <h4 class="val">${agreement}</h4>
-        </li>
-        <li class="confidence">
-          <strong class="lab">Confidence</strong>
-          <img src="/">
-          <h4 class="val">${confidence}%</h4>
-        </li>
-        <li class="irony">
-          <strong class="lab">Irony</strong>
-          <img src="/">
-          <h4 class="val">${irony}</h4>
-        </li>
-        <li class="scoretag">
-          <strong class="lab">Polarity</strong>
-          <img src="/">
-          <h4 class="val">${polarityMsg(scoreTag)}</h4>
-        </li>
-        <li class="subjectivity">
-          <strong class="lab">Subjectivity</strong>
-          <img src="/">
-          <h4 class="val">${subjectivity}</h4>
-        </li>
-      </ul>
+      <table class="sentiment">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Agrement</td>
+            <td>${agreement}</td>
+          </tr>
+          <tr>
+            <td>Confidence</td>
+            <td>${confidence}%</td>
+          </tr>
+          <tr>
+            <td>Irony</td>
+            <td>${irony}</td>
+          </tr>
+          <tr>
+            <td>Polarity</td>
+            <td>${polarityMsg(scoreTag)}</td>
+          </tr>
+          <tr>
+            <td>Subjectivity</td>
+            <td>${subjectivity}</td>
+          </tr>
+        </tbody>
+      </table>
       <div class="time"><i>${time}</i></div>`;
 
   document.getElementById('results').innerHTML = htmlCode;
