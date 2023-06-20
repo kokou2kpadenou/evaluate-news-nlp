@@ -109,6 +109,7 @@ function handleClearInput() {
   if (inputElt) {
     inputElt.value = '';
     inputElt.dispatchEvent(new Event('input'));
+    inputElt.focus();
   }
 }
 
