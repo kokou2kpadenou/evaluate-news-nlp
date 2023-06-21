@@ -55,7 +55,7 @@ function displayResult(result) {
   const { time, url, title, sentiment } = result;
   const { agreement, confidence, irony, score_tag: scoreTag, subjectivity } = sentiment;
 
-  const htmlCode = `<h3 class="title">${title}</h3>
+  const htmlCode = `<h3>${title}</h3>
       <p>
         (<a class="url" href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>)
       </p>
@@ -100,7 +100,7 @@ function displayResult(result) {
  * @param {string} error - The error message to display.
  */
 function displayError(error) {
-  document.getElementById('results').innerHTML = error;
+  document.getElementById('results').innerHTML = `<div class="error-msg">${error}</div>`;
 }
 
 /**
@@ -129,7 +129,7 @@ async function handleSubmit(event) {
   const formText = document.getElementById('name').value;
 
   if (!Client.checkForName(formText)) {
-    displayError(`${formText} is an invalid URL`);
+    displayError(`<strong>"${formText}"</strong> is an invalid URL`);
     return;
   }
 
