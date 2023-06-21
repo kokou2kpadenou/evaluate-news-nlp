@@ -1,16 +1,62 @@
+@use 'colors';
 @use 'fonts';
+@use 'typography';
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: var(--background);
+    overflow-wrap: break-word;
 }
 
 main {
     flex: 2;
 }
 
+header,
+section,
+footer {
+    padding-inline: 1rem;
+}
+
 section {
+    padding-block: 2rem;
+    text-align: center;
+}
+
+.wrapper {
     max-width: 800px;
-    margin: 50px auto;
+    margin-inline: auto;
+    margin-block: 0;
+}
+
+.sentiment {
+    text-align: left;
+    margin-block: 1rem;
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 1rem;
+    thead {
+        background-color: var(--accent);
+        color: white;
+    }
+
+    tbody tr:nth-child(odd) {
+        background-color: var(--secondary-button);
+    }
+
+    td,
+    th {
+        width: 50%;
+        padding: 0.4rem;
+        &:first-of-type {
+            text-align: right;
+        }
+    }
+}
+
+.error-msg {
+    color: var(--error);
+    margin: 1rem;
 }

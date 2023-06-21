@@ -1,0 +1,56 @@
+@use 'mixins';
+@use 'fonts';
+
+/* Base font styles */
+body {
+    font-family: var(--font-family);
+    font-size: 1rem;
+    color: var(--text);
+}
+
+%heading-shared {
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 1px;
+}
+
+/* Heading styles */
+h1 {
+    @extend %heading-shared;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    @extend %heading-shared;
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+}
+
+h3 {
+    @extend %heading-shared;
+    font-size: 1.6rem;
+    margin-bottom: 0.6rem;
+}
+
+h4 {
+    @extend %heading-shared;
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+
+/* Paragraph styles */
+// p {
+//     margin-bottom: 1rem;
+// }
+
+/* Links */
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

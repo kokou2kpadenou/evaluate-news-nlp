@@ -1,5 +1,89 @@
-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 40px;
+.header {
+    font-size: 1.5rem;
+    background-color: var(--secondary-button);
+    color: var(--accent);
+    padding-block: 1rem;
+
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    a {
+        text-decoration: none;
+        &:link,
+        &:visited {
+            color: var(--accent);
+        }
+    }
+
+    &__group {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: auto auto;
+        align-items: center;
+        gap: 0.6rem;
+        button {
+            font-size: 1.5rem;
+        }
+    }
+}
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+    &__btn {
+        color: inherit;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: var(--overlay);
+    overflow-x: hidden;
+    transition: 0.5s;
+
+    &-content {
+        position: relative;
+        top: 25%;
+        width: 100%;
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    a {
+        padding: 0.5rem;
+        text-decoration: none;
+        display: block;
+        transition: 0.3s;
+    }
+
+    a,
+    .closebtn {
+        color: var(--accent);
+        font-size: 2rem;
+    }
+
+    .closebtn {
+        position: absolute;
+        top: 20px;
+        right: 45px;
+    }
 }

@@ -1,0 +1,65 @@
+:root {
+    // For Dark Mode:
+    --text-dark: #f2f2f2; /* (light gray or off-white) */
+    --background-dark: #010403; /* (very dark gray or black) */
+    --primary-button-dark: #186477; /* (a shade of blue) */
+    --secondary-button-dark: #35424a; /* (darker shade of blue or gray) */
+    --accent-dark: #94b1f7; /* (a darker shade of the primary button color) */
+    --error-dark: #f00;
+    --overlay-dark: rgba(0, 0, 0, 0.9);
+
+    // For Light Mode:
+    --text-light: #010403; /* (very dark gray or black) */
+    --background-light: #ffffff; /* (white) */
+    --primary-button-light: #186477; /* (a shade of blue) */
+    --secondary-button-light: #f2f5fc; /* (light blue or off-white) */
+    --accent-light: #183477; /* (a darker shade of the primary button color) */
+    --error-light: #f00;
+    --overlay-light: rgba(235, 235, 235, 0.9);
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme='dark'] {
+        --text: var(--text-dark);
+        --background: var(--background-dark);
+        --primary-button: var(--primary-button-dark);
+        --secondary-button: var(--secondary-button-dark);
+        --accent: var(--accent-dark);
+        --error: var(--error-dark);
+        --overlay: var(--overlay-dark);
+    }
+
+    [data-theme='light'],
+    [data-theme='auto'] {
+        --text: var(--text-light);
+        --background: var(--background-light);
+        --primary-button: var(--primary-button-light);
+        --secondary-button: var(--secondary-button-light);
+        --accent: var(--accent-light);
+        --error: var(--error-light);
+        --overlay: var(--overlay-light);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme='dark'],
+    [data-theme='auto'] {
+        --text: var(--text-dark);
+        --background: var(--background-dark);
+        --primary-button: var(--primary-button-dark);
+        --secondary-button: var(--secondary-button-dark);
+        --accent: var(--accent-dark);
+        --error: var(--error-dark);
+        --overlay: var(--overlay-dark);
+    }
+
+    [data-theme='light'] {
+        --text: var(--text-light);
+        --background: var(--background-light);
+        --primary-button: var(--primary-button-light);
+        --secondary-button: var(--secondary-button-light);
+        --accent: var(--accent-light);
+        --error: var(--error-light);
+        --overlay: var(--overlay-light);
+    }
+}
