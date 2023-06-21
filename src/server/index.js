@@ -38,10 +38,9 @@ app.listen(PORT, () => {
 async function fetchArticle(url) {
   try {
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Failed to fetch article content');
-    }
-    const html = await response.text();
+
+    const html = !response.ok ? '' : await response.text();
+
     return [url, html];
   } catch (error) {
     console.error(error);
@@ -150,10 +149,13 @@ app.get('/sentiment', async (req, res) => {
       const { title, url } = article;
 
       const result = await fetchSentimentFromMC(url);
-      // eslint-disable-next-line camelcase
-      const { agreement, confidence, irony, score_tag, subjectivity } = result;
-      // eslint-disable-next-line camelcase
-      res.status(200).send({ time, url, title, sentiment: { agreement, confidence, irony, score_tag, subjectivity } });
+      /* eslint-disable camelcase */
+      const { agreement, confidence, irony, score_tag, subjectivity, sentence_list } = result;
+      const { text } = sentence_list[0];
+      res
+        .status(200)
+        .send({ time, url, title, sentiment: { agreement, confidence, irony, score_tag, subjectivity }, text });
+      /* eslint-enable camelcase */
     })
     .catch((error) => {
       // Handle the error

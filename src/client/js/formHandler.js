@@ -52,10 +52,11 @@ function polarityMsg(code) {
  * @param {string} result.sentiment.subjectivity - The subjectivity value.
  */
 function displayResult(result) {
-  const { time, url, title, sentiment } = result;
+  const { time, url, title, sentiment, text } = result;
   const { agreement, confidence, irony, score_tag: scoreTag, subjectivity } = sentiment;
 
   const htmlCode = `<h3>${title}</h3>
+      <p>${text}</p>
       <p>
         (<a class="url" href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>)
       </p>
