@@ -44,6 +44,8 @@ function polarityMsg(code) {
  * @param {object} result - The result object containing sentiment analysis data.
  * @param {string} result.time - The formatted time.
  * @param {string} result.title - The title of the article.
+ * @param {string} result.url - The url of the article.
+ * @param {string} result.text - The text snippet from the article.
  * @param {object} result.sentiment - The sentiment analysis data.
  * @param {string} result.sentiment.agreement - The agreement value.
  * @param {number} result.sentiment.confidence - The confidence value.
@@ -55,10 +57,10 @@ function displayResult(result) {
   const { time, url, title, sentiment, text } = result;
   const { agreement, confidence, irony, score_tag: scoreTag, subjectivity } = sentiment;
 
-  const htmlCode = `<h3>${title}</h3>
-      <p>${text}</p>
+  const htmlCode = `<h3 id="resultTitle">${title}</h3>
+      <p id="resultText">${text}</p>
       <p>
-        (<a class="url" href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>)
+        (<a id="resultUrl" class="url" href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>)
       </p>
       <table class="sentiment">
         <thead>
@@ -70,27 +72,27 @@ function displayResult(result) {
         <tbody>
           <tr>
             <td>Agrement</td>
-            <td>${agreement}</td>
+            <td id="resultAgreement">${agreement}</td>
           </tr>
           <tr>
             <td>Confidence</td>
-            <td>${confidence}%</td>
+            <td id="resultConfidence">${confidence}%</td>
           </tr>
           <tr>
             <td>Irony</td>
-            <td>${irony}</td>
+            <td id="resultIrony">${irony}</td>
           </tr>
           <tr>
             <td>Polarity</td>
-            <td>${polarityMsg(scoreTag)}</td>
+            <td id="resultPolarity">${polarityMsg(scoreTag)}</td>
           </tr>
           <tr>
             <td>Subjectivity</td>
-            <td>${subjectivity}</td>
+            <td id="resultSubjectivity">${subjectivity}</td>
           </tr>
         </tbody>
       </table>
-      <div class="time"><i>${time}</i></div>`;
+      <div id="resultTime" class="time"><i>${time}</i></div>`;
 
   document.getElementById('results').innerHTML = htmlCode;
 }
@@ -101,7 +103,7 @@ function displayResult(result) {
  * @param {string} error - The error message to display.
  */
 function displayError(error) {
-  document.getElementById('results').innerHTML = `<div class="error-msg">${error}</div>`;
+  document.getElementById('results').innerHTML = `<div class="error-msg" id="error-msg">${error}</div>`;
 }
 
 /**
@@ -134,7 +136,7 @@ async function handleSubmit(event) {
     return;
   }
 
-  console.log('::: Form Submitted :::');
+  // console.log('::: Form Submitted :::');
 
   // Show the loading indicator
   processing(true);
@@ -143,13 +145,10 @@ async function handleSubmit(event) {
     .then(async (res) => {
       const { status } = res;
       const data = await res.json();
-      return { status, data };
-    })
-    .then((res) => {
-      if (res.status === 200) {
-        displayResult(res.data);
+      if (status === 200) {
+        displayResult(data);
       } else {
-        displayError(res.data.error);
+        displayError(data.error);
       }
     })
     .catch((error) => {
@@ -189,4 +188,4 @@ function onInput(event) {
   }
 }
 
-export { handleSubmit, handleClearInput, onBlur, onInput };
+export { handleSubmit, handleClearInput, onBlur, onInput, polarityMsg, processing };
