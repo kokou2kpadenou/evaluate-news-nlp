@@ -1,4 +1,3 @@
-// const util = require("util");
 const { merge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -11,6 +10,7 @@ const common = require("./webpack.common");
 // prod only config
 const prod = {
   mode: "production",
+  entry: { serviceWorker: "./src/client/serviceWork.js" },
   optimization: {
     minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
   },
@@ -27,9 +27,6 @@ const prod = {
     new WorkboxPlugin.GenerateSW(),
   ],
 }
-
-
-// console.dir(util.inspect(merge(common, prod), {depth: null}));
 
 // Merge common and prod config
 module.exports = merge(common, prod);
