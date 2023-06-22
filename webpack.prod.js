@@ -3,6 +3,7 @@ const { merge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 // import webpack share config
 const common = require("./webpack.common");
@@ -23,6 +24,7 @@ const prod = {
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: "[name].css" }),
+    new WorkboxPlugin.GenerateSW(),
   ],
 }
 
