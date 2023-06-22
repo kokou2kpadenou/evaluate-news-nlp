@@ -2,13 +2,22 @@
   "env": {
     "browser": true,
     "es2022": true,
-    "node": true
+    "node": true,
+    "jest/globals": true
   },
   "globals": {
     "Client": "readonly"
   },
   "parser": "@babel/eslint-parser",
   "extends": ["airbnb-base", "prettier"],
+  "overrides": [
+    {
+      "files": ["test/**"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended"],
+      "rules": { "jest/prefer-expect-assertions": "off" }
+    }
+  ],
   "rules": {
     "no-console": 0,
     "no-alert": 0
