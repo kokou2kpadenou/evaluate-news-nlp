@@ -30,25 +30,6 @@
     }
 }
 
-.icon {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    stroke-width: 0;
-    stroke: currentColor;
-    fill: currentColor;
-    &__btn {
-        color: inherit;
-        padding: 0;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
-
 .overlay {
     height: 100%;
     width: 0;

@@ -1,10 +1,13 @@
-@use 'mixins';
+@use 'mixins' as m;
 @use 'fonts';
 
 /* Base font styles */
 body {
     font-family: var(--font-family);
-    font-size: 1rem;
+    font-size: 0.8rem;
+    @include m.responsive(sm) {
+        font-size: 1rem;
+    }
     color: var(--text);
 }
 
@@ -17,33 +20,46 @@ body {
 /* Heading styles */
 h1 {
     @extend %heading-shared;
-    font-size: 2rem;
+    font-size: 1.6rem;
+    @include m.responsive(sm) {
+        font-size: 2rem;
+    }
     margin-bottom: 1rem;
 }
 
 h2 {
     @extend %heading-shared;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    @include m.responsive(sm) {
+        font-size: 1.8rem;
+    }
     margin-bottom: 0.8rem;
 }
 
 h3 {
     @extend %heading-shared;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+    @include m.responsive(sm) {
+        font-size: 1.6rem;
+    }
     margin-bottom: 0.6rem;
 }
 
 h4 {
     @extend %heading-shared;
-    font-size: 1rem;
+    font-size: 0.8rem;
+    @include m.responsive(sm) {
+        font-size: 1rem;
+    }
     margin-bottom: 0.6rem;
 }
 
 
 /* Paragraph styles */
-// p {
-//     margin-bottom: 1rem;
-// }
+p {
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+}
 
 /* Links */
 a {

@@ -1,6 +1,7 @@
 @use 'colors';
 @use 'fonts';
 @use 'typography';
+@use 'layout';
 
 body {
     display: flex;
@@ -23,12 +24,6 @@ footer {
 section {
     padding-block: 2rem;
     text-align: center;
-}
-
-.wrapper {
-    max-width: 800px;
-    margin-inline: auto;
-    margin-block: 0;
 }
 
 .sentiment {
@@ -59,4 +54,23 @@ section {
 .error-msg {
     color: var(--error);
     margin: 1rem;
+}
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+    &__btn {
+        color: inherit;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

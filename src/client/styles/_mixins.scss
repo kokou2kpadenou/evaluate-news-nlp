@@ -8,7 +8,7 @@ xl  min-width: 1200px       	Laptops (and langer)
 
 use:
 ---
-@include respond-to(md) {
+@include responsive(md) {
     property: value;
 };
 
