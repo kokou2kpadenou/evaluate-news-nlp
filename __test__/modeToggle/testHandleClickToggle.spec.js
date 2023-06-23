@@ -1,17 +1,19 @@
 /**
  * @jest-environment jsdom
- * @jest-environment-options {"html": "<html lang='en'><body></body></html>"}
+ * @jest-environment-options {"html": "<html lang='en'><body><button id='mode-switch'></button></body></html>"}
  */
 
 import { handleClickToggle } from '../../src/client/js/modeToggle';
 
 const rootElement = document.documentElement;
+const modeSwitch = document.getElementById('mode-switch');
 
 describe('handleClickToggle', () => {
   it('should update the mode to the correct theme based on the current theme', () => {
     handleClickToggle();
 
     expect(rootElement.getAttribute('data-theme')).toBe('auto');
+    expect(modeSwitch.getAttribute('aria-label')).toBe('auto');
 
   });
 
@@ -19,6 +21,7 @@ describe('handleClickToggle', () => {
     handleClickToggle();
 
     expect(rootElement.getAttribute('data-theme')).toBe('dark');
+    expect(modeSwitch.getAttribute('aria-label')).toBe('dark');
 
   });
 
@@ -26,6 +29,7 @@ describe('handleClickToggle', () => {
     handleClickToggle();
 
     expect(rootElement.getAttribute('data-theme')).toBe('light');
+    expect(modeSwitch.getAttribute('aria-label')).toBe('light');
 
   });
 });
