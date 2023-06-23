@@ -9,6 +9,7 @@ const MODE = 'modePreference';
  * @param {string} mode - The mode to be set (e.g., 'dark', 'light', 'auto').
  */
 function updateMode(mode) {
+  document.getElementById('mode-switch').setAttribute('aria-label', mode);
   rootElement.setAttribute('data-theme', mode);
   setItem(MODE, mode);
 }

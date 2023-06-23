@@ -74,3 +74,73 @@ section {
         align-items: center;
     }
 }
+
+.mode-switch {
+    .moon,
+    .sun,
+    .sun-beams {
+        transform-origin: center center;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme='dark'] {
+        .sun {
+            transform: scale(1.75);
+        }
+
+        .sun-beams {
+            opacity: 0;
+        }
+
+        .moon > circle {
+            transform: translateX(-7px);
+
+            @supports (cx: 1) {
+                transform: translateX(0);
+                cx: 17;
+            }
+        }
+    }
+
+    [data-theme='light'],
+    [data-theme='auto'] {
+        .sun-beams {
+            stroke-width: 2px;
+        }
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme='dark'],
+    [data-theme='auto'] {
+        .sun {
+            transform: scale(1.75);
+        }
+
+        .sun-beams {
+            opacity: 0;
+        }
+
+        .moon > circle {
+            transform: translateX(-7px);
+
+            @supports (cx: 1) {
+                transform: translateX(0);
+                cx: 17;
+            }
+        }
+    }
+
+    [data-theme='light'] {
+        .sun-beams {
+            stroke-width: 2px;
+        }
+    }
+}
+
+[data-theme='auto'] {
+    .dot {
+        fill: var(--error);
+    }
+}
