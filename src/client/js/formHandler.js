@@ -138,10 +138,18 @@ async function handleSubmit(event) {
 
   // console.log('::: Form Submitted :::');
 
+  let BASE_URL;
+
+  try {
+    BASE_URL = IS_DEV_MODE ?  'http://localhost:8081' : '';
+  } catch {
+    BASE_URL = '';
+  }
+
   // Show the loading indicator
   processing(true);
 
-  await fetch(`http://localhost:8081/sentiment?url=${Client.addHttpsToUrl(formText)}`)
+  await fetch(`${BASE_URL}/sentiment?url=${Client.addHttpsToUrl(formText)}`)
     .then(async (res) => {
       const { status } = res;
       const data = await res.json();
