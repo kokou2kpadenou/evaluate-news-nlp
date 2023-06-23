@@ -122,6 +122,18 @@
                 <a href="https://www.kpadenou.net" target="_blank" rel="nofollow">Kokou Kpadenou</a>. All rights reserved.
         </p>
     </footer>
+<!--
+    // The follwing code inject by webpack see webpack.prod.js entry
+    <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
+-->
 </body>
 
 </html>

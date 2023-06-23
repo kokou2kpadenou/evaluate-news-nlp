@@ -10,7 +10,7 @@ const common = require("./webpack.common");
 // prod only config
 const prod = {
   mode: "production",
-  entry: { serviceWorker: "./src/client/serviceWork.js" },
+  entry: { serviceWorker: "./src/client/serviceWork.js" }, // This entry is for the service work. For the main entry see webpack.common.js
   optimization: {
     minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
   },

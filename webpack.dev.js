@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -18,6 +19,9 @@ const dev = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      IS_DEV_MODE: true,
+    }),
     new CleanWebpackPlugin({
       // Simulate the removal of files
       dry: true,

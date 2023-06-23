@@ -6,7 +6,8 @@
     "jest/globals": true
   },
   "globals": {
-    "Client": "readonly"
+    "Client": "readonly",
+    "IS_DEV_MODE": "readonly"
   },
   "parser": "@babel/eslint-parser",
   "extends": ["airbnb-base", "prettier"],
