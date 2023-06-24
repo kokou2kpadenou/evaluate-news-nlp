@@ -42,6 +42,10 @@ input {
         background-color: var(--primary-button);
         cursor: pointer;
         color: white;
+        &:disabled {
+            cursor: auto;
+            opacity: 0.4;
+        }
     }
 }
 
