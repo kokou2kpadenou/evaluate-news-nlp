@@ -37,6 +37,11 @@ console.log(asciiArt);
 // console.log('CHANGE!!');
 //
 document.addEventListener('DOMContentLoaded', () => {
+  const inputName = document.getElementById('name');
+  const event = new Event('input');
+
+  inputName.dispatchEvent(event);
+
   setModeAtStartup();
   setCopyrightYear();
 });
